@@ -5,14 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SignUp">
-    <ImageView
-        android:id="@+id/messageIv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/message"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/nameEt"
         android:layout_width="match_parent"
@@ -24,7 +17,7 @@
         android:hint="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/messageIv" />
+     app:layout_constraintTop_toTopOf="parent"/>
 
 
     <androidx.appcompat.widget.AppCompatEditText
