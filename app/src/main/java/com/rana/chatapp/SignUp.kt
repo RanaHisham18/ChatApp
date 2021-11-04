@@ -1,9 +1,14 @@
 package com.rana.chatapp
 
+import android.content.ContentValues.TAG
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
 import com.rana.chatapp.databinding.ActivityLoginBinding
 import com.rana.chatapp.databinding.ActivitySignUpBinding
@@ -30,7 +35,6 @@ class SignUp : AppCompatActivity() {
         signUpBtn.setOnClickListener{
             val email = email.text.toString()
             val password = password.text.toString()
-//            val name = name.text.toString()
 
 
             signUp(email,password)
@@ -38,6 +42,18 @@ class SignUp : AppCompatActivity() {
     }
 
     private fun signUp (email : String , password :String){
+        mAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, go to main activity
 
+                    val intent = Intent(this , MainActivity::class.java)
+                    startActivity(intent)
+
+                } else {
+                    // If sign in fails, display a message to the user.
+                     Toast.makeText(this, "Error occurred during sign up!", Toast.LENGTH_LONG).show()
+                }
+            }
     }
 }

@@ -2,8 +2,10 @@ package com.rana.chatapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.rana.chatapp.databinding.ActivityLoginBinding
@@ -42,6 +44,17 @@ class LogIn : AppCompatActivity() {
     }
 
     private fun logIn(email : String , password :String){
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                  val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Toast.makeText(this, "User is not found", Toast.LENGTH_LONG).show()
+                }
+            }
 
     }
 }
