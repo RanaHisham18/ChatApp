@@ -26,6 +26,7 @@ class SignUp : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
+         supportActionBar?.hide()
         name = findViewById(R.id.nameEt)
         email = findViewById(R.id.emailEt)
         password = findViewById(R.id.passwordEt)
