@@ -21,6 +21,9 @@ class SignUp : AppCompatActivity() {
     private lateinit var password: EditText
     private lateinit var signUpBtn: Button
     private lateinit var mAuth: FirebaseAuth
+    //variable fot the authentication of firebase
+    private lateinit var mDbRef: FirebaseAuth
+    //variable to hold the database id
     private lateinit var binding: ActivitySignUpBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +36,11 @@ class SignUp : AppCompatActivity() {
         signUpBtn = findViewById(R.id.signUpBtn)
         mAuth = FirebaseAuth.getInstance() //this is how we initialize firebase object
 
+
         signUpBtn.setOnClickListener{
             val email = email.text.toString()
             val password = password.text.toString()
+            val name = name.text.toString()
 
 
             signUp(email,password)
@@ -47,7 +52,8 @@ class SignUp : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, go to main activity
-
+//                 addUserToDb(name,email,mAuth.uid)
+                    //method to add the user to the database
                     val intent = Intent(this , MainActivity::class.java)
                     startActivity(intent)
 
@@ -56,5 +62,11 @@ class SignUp : AppCompatActivity() {
                      Toast.makeText(this, "Error occurred during sign up!", Toast.LENGTH_LONG).show()
                 }
             }
+    }
+
+    private fun addUserToDb(name: String , email: String, uid : String){
+        //method to add the user to the database
+
+
     }
 }
