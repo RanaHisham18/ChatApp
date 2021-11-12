@@ -46,18 +46,21 @@ class LogIn : AppCompatActivity() {
 
     }
 
-    private fun logIn(email : String , password :String){
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                  val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Toast.makeText(this, "User is not found", Toast.LENGTH_LONG).show()
-                }
+
+private fun logIn(email : String , password :String){
+    mAuth.createUserWithEmailAndPassword(email, password)
+        .addOnCompleteListener(this) { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(this, "You are logged in!", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, MainActivity::class.java)
+                finish()
+                startActivity(intent)
+
+            } else {
+                // If sign in fails, display a message to the user.
+                Toast.makeText(this, "User is not found", Toast.LENGTH_LONG).show()
             }
+        }
 
-    }
-}
+} }

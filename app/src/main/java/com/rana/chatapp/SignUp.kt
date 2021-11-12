@@ -54,7 +54,6 @@ class SignUp : AppCompatActivity() {
                     //  method to add the user to the database (real time database)
                     Toast.makeText(this, "User Created Seccessfully!", Toast.LENGTH_LONG).show()
                     val intent = Intent(this , MainActivity::class.java)
-                    finish()
                     startActivity(intent)
                     // Sign in success, go to main activity
                 }
