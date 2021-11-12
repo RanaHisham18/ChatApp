@@ -1,19 +1,15 @@
 package com.rana.chatapp
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.rana.chatapp.databinding.ActivityLoginBinding
-import com.rana.chatapp.databinding.ActivitySignUpBinding
+//import com.rana.chatapp.databinding.ActivitySignUpBinding
 
 class SignUp : AppCompatActivity() {
 
@@ -26,7 +22,7 @@ class SignUp : AppCompatActivity() {
     //variable fot the authentication of firebase
     private lateinit var mDbRef: DatabaseReference
     //variable to hold the database id
-    private lateinit var binding: ActivitySignUpBinding
+//    private lateinit var binding: ActivitySignUpBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
@@ -40,36 +36,38 @@ class SignUp : AppCompatActivity() {
 
 
         signUpBtn.setOnClickListener{
+            val name = name.text.toString()
             val email = email.text.toString()
             val password = password.text.toString()
-            val name = name.text.toString()
 
 
-            signUp(email,password)
+            signUp(name,email,password)
         }
     }
 
-    private fun signUp (email : String , password :String){
+    private fun signUp (name: String, email : String , password :String){
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, go to main activity
-//                 addUserToDb(name,email,mAuth.uid)
-                    //method to add the user to the database
-                    val intent = Intent(this , MainActivity::class.java)
-                    startActivity(intent)
 
-                } else {
+                    addUserToDb(name, email, mAuth.currentUser?.uid!!)
+                    //  method to add the user to the database (real time database)
+                    Toast.makeText(this, "User Created Seccessfully!", Toast.LENGTH_LONG).show()
+                    val intent = Intent(this , MainActivity::class.java)
+                    finish()
+                    startActivity(intent)
+                    // Sign in success, go to main activity
+                }
+                else {
                     // If sign in fails, display a message to the user.
-                     Toast.makeText(this, "Error occurred during sign up!", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Error occurred during sign up!", Toast.LENGTH_LONG).show()
                 }
             }
     }
 
     private fun addUserToDb(name: String , email: String, uid : String){
         //method to add the user to the database
-mDbRef = FirebaseDatabase.getInstance().getReference()
-
+        mDbRef = FirebaseDatabase.getInstance().getReference()
         mDbRef.child("user").child(uid).setValue(UserData(name , email, uid))
         //create a unique Id for every user
 
