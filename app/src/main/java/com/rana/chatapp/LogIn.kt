@@ -49,7 +49,7 @@ class LogIn : AppCompatActivity() {
 
 
 private fun logIn(email : String , password :String){
-    mAuth.createUserWithEmailAndPassword(email, password)
+    mAuth.signInWithEmailAndPassword(email,password)
         .addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
                 Toast.makeText(this, "You are logged in!", Toast.LENGTH_LONG).show()
