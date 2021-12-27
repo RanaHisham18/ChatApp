@@ -9,8 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.rana.chatapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -32,6 +31,27 @@ class MainActivity : AppCompatActivity() {
         userRecyclerView = findViewById(R.id.recyclerView)
         userRecyclerView.layoutManager = LinearLayoutManager(this)
         userRecyclerView.adapter = adapter
+       mDbRef.child("user").addValueEventListener(object: ValueEventListener{
+           override fun onDataChange(snapshot: DataSnapshot) {
+               //used to get the data from database
+
+               userList.clear()
+               //clear the users everytime the data changed before entering the for loop.
+
+             for(postSnapshot in  snapshot.children){
+                 val currentUser =postSnapshot.getValue(UserData::class.java)
+                 if (currentUser != null) {
+                     userList.add(currentUser)
+                 }
+             }
+               adapter.notifyDataSetChanged()
+           }
+
+           override fun onCancelled(error: DatabaseError) {
+               TODO("Not yet implemented")
+           }
+
+       })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
